@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Viktor Kovalev",
+      "authorEmail": "vkkovalev91@gmail.com",
+      "authorUrl": "https://github.com/Luffi2539"
+    }
+  }
+}
