@@ -3,6 +3,36 @@ const Generator = require("yeoman-generator");
 const chalk = require("chalk");
 const yosay = require("yosay");
 
+const filesArray = [
+  { src: "README.md" },
+  { src: ".gitignore" },
+  { src: ".eslintrc" },
+  { src: ".editorconfig" },
+  { src: ".babelrc" },
+  { src: "yarn.lock"},
+  { src: ".env"},
+  { src: "package.json"},
+  { src: "jsconfig.json"},
+  { src: "config/**", dest: "config/"},
+  { src: "scripts/**", dest: "scripts/"},
+  { src: "src/**", dest:"src/"}
+];
+
+const prompts = [
+  {
+    type: "confirm",
+    name: "Start",
+    message: "Would you like to start?",
+    default: true
+  },
+  {
+    type: "confirm",
+    name: "Storybook",
+    message: "Would you like to apply Storybook?",
+    default: true
+  },
+];
+
 module.exports = class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
@@ -14,29 +44,45 @@ module.exports = class extends Generator {
       )
     );
 
-    const prompts = [
-      {
-        type: "confirm",
-        name: "someAnswer",
-        message: "Would you like to enable this option?",
-        default: true
-      }
-    ];
+
 
     return this.prompt(prompts).then(props => {
-      // To access props later use this.props.someAnswer;
-      this.props = props;
-    });
+      this.answers = props
+      this.data = Object.assign({}, this.answers)
+    })
   }
 
   writing() {
-    this.fs.copy(
-      this.templatePath("dummyfile.txt"),
-      this.destinationPath("dummyfile.txt")
-    );
+    if (this.answers.Storybook) {
+      filesArray.push(
+        { src: "storybookOption/.storybook/**", dest: ".storybook/" },
+        { src: "storybookOption/stories/**", dest: "src/stories"}
+      )
+    }
+
+    filesArray.forEach(file => {
+      if (file.noTemplating || file.src.indexOf(".png") !== -1) {
+        return this.fs.copy(
+          this.templatePath(file.src),
+          this.destinationPath(file.dest || file.src || file)
+        );
+      }
+      return this.fs.copyTpl(
+        this.templatePath(file.src || file),
+        this.destinationPath(file.dest || file.src || file),
+        this.data
+      );
+    });
   }
 
+
   install() {
-    this.installDependencies();
+    this.installDependencies(
+      {
+        npm: false,
+        bower: false,
+        yarn: true
+      }
+    );
   }
 };
