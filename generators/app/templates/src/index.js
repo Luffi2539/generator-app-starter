@@ -8,7 +8,10 @@ import theme from './theme';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { create } from 'jss';
 import { BrowserRouter as Router } from 'react-router-dom';
-
+<% if (I18) { %>
+import { I18nextProvider } from 'react-i18next';
+import i18n from 'config/i18next';
+<% } %>
 const jss = create({
   ...jssPreset()
 });
@@ -16,13 +19,15 @@ const jss = create({
 const generateClassName = createGenerateClassName();
 
 ReactDOM.render(
+  <% if(I18) { %><I18nextProvider i18n={i18n}> <% } %>
     <MuiThemeProvider theme={createMuiTheme(theme)}>
       <JssProvider jss={jss} generateClassName={generateClassName}>
         <Router>
          <App />
         </Router>
       </JssProvider>
-    </MuiThemeProvider>,
+    </MuiThemeProvider>
+  <% if (I18) { %> </I18nextProvider> <% } %>,
   document.getElementById('root')
 );
 
