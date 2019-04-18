@@ -15,7 +15,8 @@ const filesArray = [
   { src: "jsconfig.json"},
   { src: "config/**", dest: "config/"},
   { src: "scripts/**", dest: "scripts/"},
-  { src: "src/**", dest:"src/"}
+  { src: "src/**", dest: "src/"},
+  { src: "public/**", dest: "public"}
 ];
 
 const prompts = [
@@ -29,6 +30,13 @@ const prompts = [
     type: "confirm",
     name: "Storybook",
     message: "Would you like to apply Storybook?",
+    default: true
+  },
+
+  {
+    type: "confirm",
+    name: "I18",
+    message: "Would you like to apply Multilanguage?",
     default: true
   },
 ];
@@ -57,6 +65,13 @@ module.exports = class extends Generator {
       filesArray.push(
         { src: "storybookOption/.storybook/**", dest: ".storybook/" },
         { src: "storybookOption/stories/**", dest: "src/stories"}
+      )
+    }
+
+    if (this.answers.I18) {
+      filesArray.push(
+        { src: "i18Option/i18next.js", dest: "src/config/i18next.js" },
+        { src: "i18Option/locales/**", dest: "src/locales"}
       )
     }
 
