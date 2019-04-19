@@ -4,15 +4,16 @@ const chalk = require("chalk");
 const yosay = require("yosay");
 
 const filesArray = [
-  { src: "README.md" },
+  { src: "_README.md", dest: "README.md" },
   { src: ".gitignore" },
   { src: ".eslintrc" },
   { src: ".editorconfig" },
   { src: ".babelrc" },
-  { src: "yarn.lock"},
+  { src: "_yarn.lock", dest: "yarn.lock"},
   { src: ".env"},
-  { src: "package.json"},
+  { src: "_package.json", dest: "package.json"},
   { src: "jsconfig.json"},
+  { src: "jestsetup.js"},
   { src: "config/**", dest: "config/"},
   { src: "scripts/**", dest: "scripts/"},
   { src: "src/**", dest: "src/"},
@@ -32,11 +33,16 @@ const prompts = [
     message: "Would you like to apply Storybook?",
     default: true
   },
-
   {
     type: "confirm",
     name: "I18",
     message: "Would you like to apply Multilanguage?",
+    default: true
+  },
+  {
+    type: "confirm",
+    name: "Redux",
+    message: "Would you like to apply Redux?",
     default: true
   },
 ];
@@ -72,6 +78,19 @@ module.exports = class extends Generator {
       filesArray.push(
         { src: "i18Option/i18next.js", dest: "src/config/i18next.js" },
         { src: "i18Option/locales/**", dest: "src/locales"}
+      )
+    }
+
+    if (this.answers.Redux) {
+      filesArray.push(
+        { src: "reduxOption/actionCreators/**", dest: "src/actionCreators/" },
+        { src: "reduxOption/actionTypes/**", dest: "src/actionTypes/" },
+        { src: "reduxOption/reducers/**", dest: "src/reducers/" },
+        { src: "reduxOption/selectors/**", dest: "src/selectors/" },
+        { src: "reduxOption/store/**", dest: "src/store/" },
+        { src: "reduxOption/ModalsPortal/**", dest: "src/components/ModalsPortal/" },
+        { src: "reduxOption/selector_FILE_UPLOADER.js", dest: "src/components/Forms/FileUploader/selector.js"},
+        { src: "reduxOption/selector_HOME.js", dest: "src/pages/Home/selector.js"}
       )
     }
 

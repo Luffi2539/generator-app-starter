@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route } from <% if (Redux) { %>'react-router'<% } else { %>'react-router-dom'<% } %>;
 
 import * as Routes from '../constants/routing';
 
