@@ -9,7 +9,7 @@ const filesArray = [
   { src: ".eslintrc" },
   { src: ".editorconfig" },
   { src: ".babelrc" },
-  { src: "_yarn.lock", dest: "yarn.lock"},
+  { src: "yarn.lock", dest: "yarn.lock"},
   { src: ".env"},
   { src: "_package.json", dest: "package.json"},
   { src: "jsconfig.json"},
