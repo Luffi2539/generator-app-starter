@@ -75,7 +75,8 @@
     "@babel/core": "7.2.2",
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
-    "@svgr/webpack": "4.1.0",
+    "@svgr/webpack": "4.1.0",<% if (Saga) { %>
+    "aws-sdk": "^2.408.0",<% } %>
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -139,7 +140,9 @@
     "redux-actions": "^2.6.4",
     "redux-form": "^8.1.0",
     "redux-immutable": "^4.0.0",
-    "redux-localstorage": "^0.4.1",
+    "redux-localstorage": "^0.4.1",<% if (Saga) { %>
+    "redux-saga": "^1.0.1",
+    "redux-saga-test-plan": "^4.0.0-beta.2",<% } %>
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",<% } %>
     "resolve": "1.10.0",
@@ -151,7 +154,11 @@
     "webpack": "4.28.3",
     "webpack-dev-server": "3.1.14",
     "webpack-manifest-plugin": "2.0.4",
-    "workbox-webpack-plugin": "3.6.3"
+    "workbox-webpack-plugin": "3.6.3",<% if (Firebase) { %>
+    "firebase": "^5.9.3",
+    "react-redux-firebase": "^3.0.0-alpha.11",
+    "redux-firestore": "^0.7.3",<% } %><% if (Firebase && Saga) { %>
+    "redux-saga-firebase": "^0.15.0"<% } %>
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.3.3",

@@ -13,11 +13,21 @@ import { Provider } from 'react-redux';
 import store from './store';
 import history from './store/history';
 import { ConnectedRouter } from 'connected-react-router/immutable';<% } else { %>
-import { BrowserRouter as Router } from 'react-router-dom';<% } %>
+import { BrowserRouter as Router } from 'react-router-dom';<% } %><% if (Firebase) { %>
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import { createFirestoreInstance } from 'redux-firestore';
+import firebase from 'config/fbConfig';
+import config from 'config/fbConfig';<% } %>
 const jss = create({
   ...jssPreset()
 });
 
+<% if (Firebase) { %>const rrfProps = {
+  firebase,
+  config: config,
+  dispatch: store.dispatch,
+  createFirestoreInstance
+};<% } %>
 const generateClassName = createGenerateClassName();
 
 ReactDOM.render(
@@ -25,12 +35,16 @@ ReactDOM.render(
     <MuiThemeProvider theme={createMuiTheme(theme)}>
       <JssProvider jss={jss} generateClassName={generateClassName}><% if (Redux) { %>
         <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <App />
+          <ConnectedRouter history={history}><% if (Firebase) { %>
+            <ReactReduxFirebaseProvider {...rrfProps}><% } %>
+              <App /><% if (Firebase) { %>
+            </ReactReduxFirebaseProvider><% } %>
           </ConnectedRouter>
         </Provider><% } else { %>
-        <Router>
-         <App />
+        <Router><% if (Firebase) { %>
+          <ReactReduxFirebaseProvider {...rrfProps}><% } %>
+            <App /><% if (Firebase) { %>
+          </ReactReduxFirebaseProvider><% } %>
         </Router><% } %>
       </JssProvider>
     </MuiThemeProvider>

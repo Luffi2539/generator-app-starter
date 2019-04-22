@@ -45,6 +45,18 @@ const prompts = [
     message: "Would you like to apply Redux?",
     default: true
   },
+  {
+    type: "confirm",
+    name: "Saga",
+    message: "Would you like to apply Redux-Saga?",
+    default: true
+  },
+  {
+    type: "confirm",
+    name: "Firebase",
+    message: "Would you like to apply Firebase?",
+    default: true
+  },
 ];
 
 module.exports = class extends Generator {
@@ -91,6 +103,27 @@ module.exports = class extends Generator {
         { src: "reduxOption/ModalsPortal/**", dest: "src/components/ModalsPortal/" },
         { src: "reduxOption/selector_FILE_UPLOADER.js", dest: "src/components/Forms/FileUploader/selector.js"},
         { src: "reduxOption/selector_HOME.js", dest: "src/pages/Home/selector.js"}
+      )
+    }
+
+    if (this.answers.Saga) {
+      filesArray.push(
+        { src: "sagaOption/domains/**", dest: "src/domains/"},
+        { src: "sagaOption/sagas/**", dest: "src/sagas/"},
+        { src: "sagaOption/aws/aws_constants.js", dest: "src/constants/aws.js"},
+        { src: "sagaOption/aws/aws_services.js", dest: "src/services/aws.js"},
+      )
+    }
+
+    if (this.answers.Firebase) {
+      filesArray.push(
+        { src: "firebaseOption/fbConfig.js", dest: "src/config/fbConfig.js"},
+      )
+    }
+
+    if (this.answers.Firebase && this.answers.Saga) {
+      filesArray.push(
+        { src: "firebaseOption/rsf.js", dest: "src/domains/firebase/rsf.js"},
       )
     }
 
