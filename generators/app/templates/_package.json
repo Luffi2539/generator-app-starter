@@ -157,7 +157,7 @@
     "workbox-webpack-plugin": "3.6.3",<% if (Firebase) { %>
     "firebase": "^5.9.3",
     "react-redux-firebase": "^3.0.0-alpha.11",
-    "redux-firestore": "^0.7.3",<% } %><% if (Firebase && Saga) { %>
+    "redux-firestore": "^0.7.3"<% } %><% if (Firebase && Saga) { %>,
     "redux-saga-firebase": "^0.15.0"<% } %>
   },
   "devDependencies": {
