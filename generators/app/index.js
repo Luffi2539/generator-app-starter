@@ -34,14 +34,20 @@ const prompts = [
     default: true
   },
   {
-    type: "confirm",
-    name: "Redux",
-    message: "Would you like to apply Redux?",
-    default: true
+    type: "list",
+    name: "Redux or mobX",
+    message: "Would you like to apply Redux or mobX?",
+    choices: [{
+      name: 'Redux plz',
+      value: 'Redux'
+    },{
+      name: 'mobX',
+      value: 'mobX'
+    }]
   },
   {
     when: function (response) {
-      return response.Redux
+      return response['Redux or mobX'] === 'Redux'
     },
     type: "list",
     name: "Saga or rxJS",
@@ -56,7 +62,7 @@ const prompts = [
   },
   {
     when: function (response) {
-      return response.Redux
+      return response['Redux or mobX'] === 'Redux'
     },
     type: "confirm",
     name: "Firebase",
@@ -81,7 +87,15 @@ module.exports = class extends Generator {
     return this.prompt(prompts).then(props => {
       this.answers = props
       this.answers.Saga = false;
-      this.answers.rxJS = false
+      this.answers.rxJS = false;
+      this.answers.Redux = false;
+      this.answers.mobX = false;
+      if (this.answers['Redux or mobX'] === 'Redux') {
+        this.answers.Redux = true;
+      }
+      if (this.answers['Redux or mobX'] === 'mobX') {
+        this.answers.mobX = true;
+      }
       if (this.answers['Saga or rxJS'] === 'Saga') {
         this.answers.Saga = true;
       }
@@ -145,6 +159,12 @@ module.exports = class extends Generator {
     }
 
     if (this.answers.Firebase && this.answers.Saga) {
+      filesArray.push(
+        { src: "firebaseOption/rsf.js", dest: "src/domains/firebase/rsf.js"},
+      )
+    }
+
+    if (this.answers.mobX) {
       filesArray.push(
         { src: "firebaseOption/rsf.js", dest: "src/domains/firebase/rsf.js"},
       )
