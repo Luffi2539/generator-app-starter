@@ -23,12 +23,6 @@ const filesArray = [
 const prompts = [
   {
     type: "confirm",
-    name: "Start",
-    message: "Would you like to start?",
-    default: true
-  },
-  {
-    type: "confirm",
     name: "Storybook",
     message: "Would you like to apply Storybook?",
     default: true
@@ -46,12 +40,24 @@ const prompts = [
     default: true
   },
   {
-    type: "confirm",
-    name: "Saga",
-    message: "Would you like to apply Redux-Saga?",
-    default: true
+    when: function (response) {
+      return response.Redux
+    },
+    type: "list",
+    name: "Saga or rxJS",
+    message: "Would you like to apply Redux-Saga or rxJS?",
+    choices: [{
+      name: 'Saga plz',
+      value: 'Saga'
+    },{
+      name: 'rxJS ofc',
+      value: 'rxJS'
+    }]
   },
   {
+    when: function (response) {
+      return response.Redux
+    },
     type: "confirm",
     name: "Firebase",
     message: "Would you like to apply Firebase?",
@@ -74,6 +80,17 @@ module.exports = class extends Generator {
 
     return this.prompt(prompts).then(props => {
       this.answers = props
+      this.answers.Saga = false;
+      this.answers.rxJS = false
+      if (this.answers['Saga or rxJS'] === 'Saga') {
+        this.answers.Saga = true;
+      }
+      if (this.answers['Saga or rxJS'] === 'rxJS') {
+        this.answers.rxJS = true;
+      }
+      if(!this.answers.Redux) {
+        this.answers.Firebase = false;
+      }
       this.data = Object.assign({}, this.answers)
     })
   }
@@ -112,6 +129,12 @@ module.exports = class extends Generator {
         { src: "sagaOption/sagas/**", dest: "src/sagas/"},
         { src: "sagaOption/aws/aws_constants.js", dest: "src/constants/aws.js"},
         { src: "sagaOption/aws/aws_services.js", dest: "src/services/aws.js"},
+      )
+    }
+
+    if(this.answers.rxJS) {
+      filesArray.push(
+        { src: "rxJSOption/epics/**", dest: "src/epics/"},
       )
     }
 

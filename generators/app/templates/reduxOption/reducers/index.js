@@ -2,7 +2,9 @@ import { combineReducers } from 'redux-immutable';
 import { reducer as formReducer } from 'redux-form';
 import { connectRouter } from 'connected-react-router/immutable';<% if (Firebase) { %>
 import { firestoreReducer } from 'redux-firestore';
-import { firebaseReducer } from 'react-redux-firebase';<% } %>
+import { firebaseReducer } from 'react-redux-firebase';<% } %><% if (rxJS) { %>
+import ping from 'epics/ping/reducer';
+import users from 'epics/users/reducer';<% } %>
 
 // generic
 import modals from './modals';
@@ -21,4 +23,8 @@ export default (history) => combineReducers({
   modals,
   loading,
   fileUploaders,
+  <% if (rxJS) { %>
+  // rxJS examples
+  ping,
+  users<% } %>
 });
