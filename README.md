@@ -1,13 +1,13 @@
 # generator-app-starter [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
-> starter for React App
+> starter for React App with Redux/mobX, Saga/rxJS, Firebase, Stoorybook and else
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and generator-app-starter using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+Clone this repository cd to this folder
 
 ```bash
 npm install -g yo
-npm install -g generator-app-starter
+npm link
 ```
 
 Then generate your new project:
@@ -25,8 +25,7 @@ yo app-starter
 
 ## License
 
-MIT © [Viktor Kovalev](https://github.com/Luffi2539)
-
+MIT © 
 
 [npm-image]: https://badge.fury.io/js/generator-app-starter.svg
 [npm-url]: https://npmjs.org/package/generator-app-starter

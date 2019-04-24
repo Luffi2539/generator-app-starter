@@ -5,11 +5,14 @@ import * as Routes from '../constants/routing';
 
 // views
 import Home from 'pages/Home';
-import NotFound from 'pages/NotFound';
+import NotFound from 'pages/NotFound';<% if (mobX) { %>
+import HomeModel from 'models/HomeModel';
+
+const storeHome = new HomeModel();<% } %>
 
 const Router = () => (
   <Switch>
-    <Route exact path={Routes.HOME} component={Home} />
+    <Route exact path={Routes.HOME} <% if (mobX) { %>render={(props) => <Home {...props} store={storeHome} /> }<% } else { %>component={Home}<% } %> />
     <Route path="*" component={NotFound} />
   </Switch>
 );

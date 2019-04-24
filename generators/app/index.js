@@ -166,7 +166,7 @@ module.exports = class extends Generator {
 
     if (this.answers.mobX) {
       filesArray.push(
-        { src: "firebaseOption/rsf.js", dest: "src/domains/firebase/rsf.js"},
+        { src: "mobXOption/models/**", dest: "src/models"},
       )
     }
 
