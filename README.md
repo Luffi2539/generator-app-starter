@@ -10,7 +10,7 @@ npm install -g yo
 npm link
 ```
 
-Then generate your new project:
+Then generate your new project in other folder:
 
 ```bash
 yo app-starter
